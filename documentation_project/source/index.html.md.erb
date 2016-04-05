@@ -1,0 +1,53 @@
+---
+title:    Welcome to <code>middlemac-extras</code>
+blurb:    <em>middlemac-extras</em> adds several developer conveniences.
+layout:   template-logo-large
+navigate: false
+---
+
+<%= md_links %>
+
+# <%= current_page.data.title %>
+
+Although developed for **Middlemac**, the `middlemac-extras` extension for
+Middleman is a great way to add handy developer conveniences to your Middleman
+project.
+
+It serves as a truly “extra” extension that gathers utilities intended for
+**MiddleMac** but are generic enough that they can be used with any Middleman
+project.
+
+This extension currently offers features such as these:
+
+- CSS-based image sizes
+- Automatic Markdown reference-style links
+- Automatic Markdown reference-style images
+- An enhanced `image_tag` that:
+   - Automatically includes a `srcset` attribute for @2x images
+   - Allows you to omit the extension for image files
+   - Fixes `automatic_alt_tags` for absolute path images
+
+* * *
+
+[The `css_image_sizes` helper][css_image_sizes]
+ : Use the `css_image_sizes` helper to specify maximum sizes for all of your
+   project’s images without using unsemantic `width` and `height` attributes
+   in your HTML code.
+
+[The `image_tag` helper][image_tag]
+ : Find out how to use the enhanced `image_tag` helper so that it can be even
+   more helpful.
+
+[The `md_images` helper][md_images]
+ : Automatic Markdown reference style links for every image in your site are
+   available by using this helper.
+
+[The `md_links` helper][md_links]
+ : The `md_links` helper can help you by providing Markdown reference-style
+   links (including `title` attributes) to every page in your site.
+
+[Setting up `config.rb`][config_rb]
+ : Review the key configuration values for making this extension work.
+
+[The MIT License][license]
+ : Describes your legal rights and obligations for using these materials.

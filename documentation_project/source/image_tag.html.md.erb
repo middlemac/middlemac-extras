@@ -1,0 +1,83 @@
+---
+title:    The <code>image_tag</code> helper
+blurb:    Find out how to use the enhanced <code>image_tag</code> helper so that
+          it can be even more helpful.
+layout:   template-logo-medium
+order:    40
+navigate: false
+---
+
+<%= md_links %>
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="css_image_sizes.html">The <code>css_image_sizes</code> helper</a></li>
+  <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>
+
+# <%= current_page.data.title %>
+<%= current_page.data.blurb %>
+
+The `image_tag` helper (which also handles Markdown links) has been given some
+new capabilities aimed towards making you more productive.
+
+## Automatic image extensions
+
+When enabled this new feature allows you to omit the image extension when
+specifying an image.
+
+~~~ erb
+<%= image_tag 'image' %>
+~~~
+
+~~~ markdown
+![MyImage](image)
+~~~
+
+When enabled, the helper will look for images in your project that have an 
+extension specified by `img_auto_extensions_order` in your
+[`config.rb`][config_rb] file.
+
+### Enable this behavior
+
+You can enable or disable this behavior globally in [`config.rb`][config_rb]
+file, within the `activate :MiddlemacExtras` activation block by setting the
+value of `img_auto_extensions` to `true` or `false`.
+
+You can always enable or disable this behavior selectively by passing this
+same key with a `true` or `false` value in the helper’s parameters hash, too.
+
+
+## Automatic `srcset` for @2x images
+
+When enabled, the helper will look for @2x versions of your images within your
+project and add a a `srcset` attribute to the image tag automatically. If you
+specify your own `srcset` attribute, then this automatic behavior will never
+occur.
+
+~~~ html
+<img srcset="image@2x.png" src="image.png">
+~~~
+
+### Enable this behavior
+
+You can enable or disable this behavior globally in [`config.rb`][config_rb]
+file, within the `activate :MiddlemacExtras` activation block by setting the
+value of `retina_srcset` to `true` or `false`.
+
+You can always enable or disable this behavior selectively by passing this
+same key with a `true` or `false` value in the helper’s parameters hash, too.
+
+
+## Enables automatic_alt_tags support for absolute paths
+
+Middleman has an extension called `automatic_alt_tags` that specifies an
+automatic value for an image’s `alt` attribute if you fail to provide one.
+Unfortunately this does not work if you specify an absolute path to an image.
+
+If your project activates `automatic_alt_tags`, then `middlemac-extras` will
+apply an automatic `alt` attribute in these cases.

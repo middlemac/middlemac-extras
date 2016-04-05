@@ -1,0 +1,72 @@
+---
+title:    Setting up config.rb
+blurb:    Review the key configuration values for making this extension work.
+layout:   template-logo-medium
+order:    40
+navigate: false
+---
+
+<%= md_links %>
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="css_image_sizes.html">The <code>css_image_sizes</code> helper</a></li>
+  <li><a href="image_tag.html">The <code>image_tag</code> helper</a></li>
+  <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>
+
+# <%= current_page.data.title %>
+<%= current_page.data.blurb %>
+
+Some minimal configuration in your `config.rb` project file is required in order
+for `middlemac-extras` to be useful.
+
+## Conflicting resources
+
+This extension uses Middleman's resource map to generate a lot of the
+information that it provides. Be sure to activate other extensions that
+might manipulate the resource map before activating middlemac-extras,
+such as MiddlemanPageGroups (which changes the output names of some files).
+
+Also our `image_tag` helper should inherit from other `image_tag` helpers,
+so it's best to make sure they're activated first.
+
+
+## Extension Setup
+
+This extension has to be activated before it can be used. If you’re happy with
+the default configuration values, activation can be as simple as:
+
+~~~ ruby
+activate: MiddlemacExtras
+~~~
+
+Otherwise the block format should be used to set the extension’s configuration
+variables:
+
+~~~ ruby
+activate :MiddlemacExtras do |config|
+
+  # If set to true, then the enhanced image_tag helper will be used
+  # to include @2x srcset automatically, if the image asset exists.
+  config.retina_srcset = true
+
+  # If set to true then the `image_tag` helper will work for images even
+  # if you don't specify an extension, but only if a file exists on disk
+  # that has one of the extensions in :img_auto_extensions_order.
+  config.img_auto_extensions = true
+
+  # Set this to an array of extensions in the order of precedence for
+  # using `image_tag` without file extensions.
+  config.img_auto_extensions_order = %w(.svg .png .jpg .jpeg .gif .tiff .tif)
+
+end
+~~~
+
+
+### Extension Options
+
+The extension options are described in the code snippet, above.

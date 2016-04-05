@@ -1,0 +1,72 @@
+---
+title:    The <code>md_images</code> helper
+blurb:    Automatic Markdown reference style links for every image in your site
+          are available by using this helper.
+layout:   template-logo-medium
+order:    40
+navigate: false
+---
+
+<%= md_links %>
+<%= md_images %>
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="css_image_sizes.html">The <code>css_image_sizes</code> helper</a></li>
+  <li><a href="image_tag.html">The <code>image_tag</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>
+
+# <%= current_page.data.title %>
+<%= current_page.data.blurb %>
+
+It works by providing a Markdown list of file references for every image used
+by your project.
+
+## Example
+
+When called like this:
+
+~~~ erb
+<%%= md_images %>
+~~~
+
+…the invisible result (made visible here) is this:
+
+~~~ markdown
+<%= md_images %>
+~~~
+
+Note that not all of these images are in use within this documentation; they’re
+provided in this sample project only to illustrate this helper’s output.
+{:.note}
+
+## Use
+
+Simply call the helper as described above, and then you can link to your images
+very easily using Markdown reference-style links:
+
+~~~ markdown
+!['middlemac-extras-small' logo][middlemac-extras-small]
+~~~
+
+!['middlemac-extras-small' logo][middlemac-extras-small]
+
+
+## Reference naming
+
+The extension tries to keep the reference as short as possible. If all of your
+images are within the `images/` directory then the references will be very
+simple.
+
+Items that are nested deeper will also have simple names if the name
+is unique within your project.
+
+Both of those conditions satisfy the vast majority of use cases. However if you
+have multiple nested directories that share common image names, then the
+references can grow quite long, and **the reference is not guaranteed** to stay
+stable as you add more images with the same name in other directories. See the
+example above.

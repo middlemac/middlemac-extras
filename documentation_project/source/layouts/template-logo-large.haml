@@ -1,0 +1,22 @@
+= wrap_layout ('layout'.to_sym) do
+  .container-logo-large
+    %div
+      %div
+        = image_tag 'middlemac-extras-small.png', :alt => 'middlemac-extras logo'
+        %h1= "#{product_name}"
+        %h2= "version #{product_version}"
+        %a{:href => product_uri}= product_uri
+
+      - if content_for?(:seeAlso)
+        .related_topics
+          %h1 See Also
+          = yield_content :seeAlso
+
+    %div
+      .yield-content
+        ~ yield
+
+-#
+  This template is suitable for your landing page or major sections, and features
+  a large version of your logo, the application name, and the application URI.
+  It can include optional :seeAlso content below the application URI.

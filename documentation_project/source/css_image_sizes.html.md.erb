@@ -1,0 +1,65 @@
+---
+title:    The <code>css_image_sizes</code> helper
+blurb:    Use the <code>css_image_sizes</code> helper to specify maximum sizes
+          for all of your project’s images without using unsemantic width and 
+          height attributes in your HTML code.
+layout:   template-logo-medium
+order:    40
+navigate: false
+---
+
+<%= md_links %>
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="image_tag.html">The <code>image_tag</code> helper</a></li>
+  <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>
+
+# <%= current_page.data.title %>
+<%= current_page.data.blurb %>
+
+It works by specifying a `max-width` and `max-height` for each image used in
+your Middleman project (except for SVG files, which don’t have dimensions).
+
+## Example
+
+When called like this:
+
+~~~ erb
+<%%= css_image_sizes %>
+~~~
+
+…the result is this:
+
+~~~ scss
+<%= css_image_sizes %>
+~~~
+
+## Use
+
+You could use this in an HTML `<style>` element on each of your pages, or better
+yet in your layouts. This has the unfortunate effect of including it in every
+one of your pages, however, and so this sample project uses like this:
+
+Contents of `stylesheets/css_image_sizes.css.erb`:
+
+~~~ erb
+<%%= css_image_sizes %>
+~~~
+
+This will create `stylesheets/css_image_sizes.css` in your build output, and
+this file is included in the project layout file:
+
+~~~ haml
+= stylesheet_link_tag 'css_image_sizes'
+~~~
+
+You will be tempted to add this helper to your `style.css.scss` file, maybe
+even renaming it to `style.css.scss.erb`, but this will not work due to the
+order that Middleman and SASS build output.
+{:.note}

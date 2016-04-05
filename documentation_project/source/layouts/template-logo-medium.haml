@@ -1,0 +1,20 @@
+= wrap_layout ('layout'.to_sym) do
+  .container-logo-medium
+    %div
+      .yield-content
+        ~ yield
+
+    %div
+      %div
+        = image_tag 'middlemac-extras-small.png', :alt => 'middlemac-extras logo'
+      .related_topics
+        - if content_for?(:seeAlso)
+          %h1 See Also
+          = yield_content :seeAlso
+
+-#
+  This template is suitable for general pages within a group, as it makes
+  navigation between the different pages in the group obvious and easy. It
+  features a medium version of your logo on the right, followed by navigation
+  to the other pages in the group. Optionally :seeAlso content can follow the
+  related pages.

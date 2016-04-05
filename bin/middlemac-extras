@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+################################################################################
+# middlemac-extras
+#  This file constitutes the command line interface for middlemac-extras
+################################################################################
+
+require 'thor'
+require 'fileutils'
+require_relative '../lib/middlemac-extras/version'
+
+
+module MiddlemacExtrasCli
+
+  class Cli < Thor
+
+    map %w[--version -v] => :__print_version
+
+    ############################################################
+    # help
+    #  Override to add additional description.
+    ############################################################
+    def help(*args)
+      if args.count == 0
+        puts <<-HEREDOC
+
+middlemac-extras version #{Middleman::MiddlemacExtras::VERSION}
+
+This gem adds functionality to Middleman and is not executable on its own,
+other than for generating the documentation sample project. Instead, you 
+must add this gem to your Middleman project's `Gemfile` and then activate 
+it in your `config.rb` file. 
+
+HEREDOC
+      end
+      super
+    end
+
+
+    ############################################################
+    # documentation
+    ############################################################
+    desc 'documentation', 'Install the sample project into your current working directory.'
+    long_desc <<-HEREDOC
+`documentation` will produce a sample project named `middlemac-extras-docs/`
+in your current working directory. This sample uses the features of this gem.
+You can then serve this new project to read the documentation by:
+
+cd middlemac-extras-docs
+bundle install
+bundle exec middleman server
+    
+    HEREDOC
+    def documentation
+      source = File.join('..', '..', 'documentation_project', '.')
+      source = File.expand_path(source, __FILE__)
+      dest = File.expand_path(File.join('.', 'middlemac-extras-docs', '.'))
+      FileUtils.cp_r(source, dest)
+      puts "middlemac-extras installed the project in\n#{dest}" 
+    end
+
+
+    ############################################################
+    # __print_version
+    ############################################################
+    desc '--version, -v', 'print the version'
+    def __print_version
+      puts "middlemac-extras version #{Middleman::MiddlemacExtras::VERSION}"
+    end
+
+  end # class Cli
+
+end # module MiddlemacExtrasCli
+
+
+###########################################################
+# Main
+###########################################################
+
+MiddlemacExtrasCli::Cli.start(ARGV)

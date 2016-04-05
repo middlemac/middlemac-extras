@@ -1,0 +1,78 @@
+---
+title:    archives/index.html Generic Sample Page
+layout:   template-logo-large
+---
+
+# <%= current_page.data.title %>
+
+This is a generic sample page, and it’s included in this project just to force
+the helpers to have some information to demonstrate. With that, let’s have a
+look at the helper output.
+
+* * *
+
+## `<%%= md_links %>` 
+
+This isn't normally meant to be visible; this simply shows you the content that
+would be part of your Markdown file when including this helper. You can use
+these reference-style tags with Markdown, e.g., `[Home page][index]`.
+
+<%= md_links %>
+
+~~~ erb
+<%%= md_links %>
+~~~
+
+~~~ markdown
+<%= md_links %>
+~~~
+
+### Test
+
+ 
+## `<%%= md_images %>` 
+
+This isn't normally meant to be visible; this simply shows you the content that
+would be part of your Markdown file when including this helper. You can use
+these reference-style tags with Markdown, e.g., `[Home page][index]`.
+
+<%= md_images %>
+
+~~~ erb
+<%%= md_images %>
+~~~
+
+~~~ markdown
+<%= md_images %>
+~~~
+
+### Test
+
+Using [middlemac-extras-small]:
+
+![middlemac-extras-small][middlemac-extras-small]
+
+Using [sub_images-middlemac-extras]:
+
+![sub_images-middlemac-extras][sub_images-middlemac-extras]
+
+
+## `<%%= css_image_sizes %>` 
+
+~~~ erb
+<%%= css_image_sizes %>
+~~~
+
+~~~ markdown
+<%= css_image_sizes %>
+~~~
+
+
+* * *
+
+# Link to license
+
+See the [license][license].
+Go to the [index][index].
+
+* * *
