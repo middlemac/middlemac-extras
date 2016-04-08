@@ -265,7 +265,7 @@ class MiddlemacExtras < ::Middleman::Extension
         end
       end # each
     end
-    @md_images_b
+    @md_sizes_b
   end
 
 end # class MiddlemacExtras
