@@ -265,5 +265,6 @@ class MiddlemacExtras < ::Middleman::Extension
         end
       end # each
     end
+  end
 
 end # class MiddlemacExtras

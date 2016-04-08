@@ -1,7 +1,7 @@
 middlemac-extras change log
 ===========================
 
-- Version 1.0.1 / 2016-April-08
+- Version 1.0.2 / 2016-April-08
 
   - Fixed the implementation of css_image_sizes so that full path is not
     always used, as Middleman using `:relative_assets` doesn't use the full
