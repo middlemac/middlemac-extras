@@ -265,7 +265,7 @@ class MiddlemacExtras < ::Middleman::Extension
         end
       end # each
     end
-    @md_sizes_b
+    @md_sizes_b.join("\n")
   end
 
 end # class MiddlemacExtras
