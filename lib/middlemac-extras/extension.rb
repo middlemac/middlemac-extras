@@ -250,12 +250,20 @@ class MiddlemacExtras < ::Middleman::Extension
         if FastImage.size(file)
           width = (FastImage.size(file)[0] / factor).to_i.to_s
           height = (FastImage.size(file)[1] / factor).to_i.to_s
-          @md_sizes_b << "img[src$='#{r.url}'] { max-width: #{width}px; max-height: #{height}px; }"
+          # CSS matches string literals and doesn't evaluate image paths.
+          # Assets in the image path with always bear the final path component
+          # in order to avoid collisions while working with relative_assets or
+          # not; items outside of the images_dir will use the basename only and
+          # be subject to collisions.
+          if r.url.start_with?("/#{app.config[:images_dir]}")
+            subtract = "/#{app.config[:images_dir].split('/')[0...-1].join('/')}/"
+            url = r.url.sub(subtract, '')
+            @md_sizes_b << "img[src$='#{url}'] { max-width: #{width}px; max-height: #{height}px; }"
+          else
+            @md_sizes_b << "img[src$='#{File.basename(r.url)}'] { max-width: #{width}px; max-height: #{height}px; }"
+          end
         end
       end # each
     end
-
-    @md_sizes_b.join("\n")
-  end
 
 end # class MiddlemacExtras
