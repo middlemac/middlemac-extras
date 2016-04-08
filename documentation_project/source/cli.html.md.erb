@@ -1,0 +1,49 @@
+---
+title:     Command Line Interface
+layout:    template-logo-medium
+---
+
+# <%= current_page.data.title %>
+
+`middlemac-extras` has a small command line interface that might be useful
+for generating sample documentation.
+
+The CLI takes the format:
+
+~~~ bash
+middlemac-extras command
+~~~
+
+…where the following commands are available.
+
+`documentation`
+
+ : Produces a sample project named `middlemac-extras-docs/` in your current
+   working directory. This sample uses the features of this gem. You can then
+   serve this new project to read the documentation by:
+
+~~~ bash
+cd middlemac-extras-docs
+bundle install
+bundle exec middleman server
+~~~
+
+
+`help`
+
+ : Displays CLI usage help.
+ 
+`--version` or `-v`
+
+ : Displays the version of `middlemac-extras`.
+
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="css_image_sizes.html">The <code>css_image_sizes</code> helper</a></li>
+  <li><a href="image_tag.html">The <code>image_tag</code> helper</a></li>
+  <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>

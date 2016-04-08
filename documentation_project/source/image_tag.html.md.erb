@@ -15,6 +15,7 @@ navigate: false
   <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
   <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
   <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="cli.html">Command line interface</a></li>
   <li><a href="license.html">The MIT License</a></li>
 </ul>
 <% end %>
@@ -31,12 +32,15 @@ When enabled this new feature allows you to omit the image extension when
 specifying an image.
 
 ~~~ erb
-<%= image_tag 'image' %>
+<%%= image_tag 'middlemac-extras-small' %>
 ~~~
 
 ~~~ markdown
-![MyImage](image)
+![MyImage](middlemac-extras-small)
 ~~~
+
+<%= image_tag 'middlemac-extras-small' %>
+
 
 When enabled, the helper will look for images in your project that have an 
 extension specified by `img_auto_extensions_order` in your

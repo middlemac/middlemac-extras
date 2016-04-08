@@ -94,6 +94,8 @@ class MiddlemacExtras < ::Middleman::Extension
 
       img_auto_extensions = ext_options[:img_auto_extensions]
       img_auto_extensions = params.delete(:img_auto_extensions) if params[:img_auto_extensions]
+      
+      middleman_targets = app.extensions[:MiddlemanTargets]
 
       retina_srcset = ext_options[:retina_srcset]
       retina_srcset = params.delete(:retina_srcset) if params[:retina_srcset]
@@ -109,18 +111,29 @@ class MiddlemacExtras < ::Middleman::Extension
       #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if File.extname(path) == '' && img_auto_extensions
         ext_options[:img_auto_extensions_order].reverse.each do |ext|
-          real_path = "#{path.dup}#{ext}"
-          real_path = if path.start_with?('/')
-                        File.expand_path(File.join(@app.config[:source], real_path))
-                      else
-                        File.expand_path(File.join(@app.config[:source], @app.config[:images_dir], real_path))
-                      end
+        
+          original_path = path.dup
+          proposed_path = app.extensions[:MiddlemacExtras].with_extension_proposal( original_path, ext )
 
-          file = app.files.find(:source, real_path)
-          if file && file[:full_path].exist?
-            path = "#{path.dup}#{ext}"
-          end
+          path = proposed_path if proposed_path != original_path
+
         end # each
+        
+        # If we're still empty and we're using `middleman-targets` let's try
+        # to find a match using the `middleman-targets` gem, because there
+        # may be a target-specific image but not the magic_word image that
+        # was asked for.
+        if File.extname(path) == '' && middleman_targets
+          ext_options[:img_auto_extensions_order].reverse.each do |ext|
+        
+            test_path = "#{path}#{ext}"
+            proposed_path = middleman_targets.target_specific_proposal(test_path)
+
+            path = proposed_path if proposed_path != test_path
+
+          end # each
+          
+        end # if
       end
 
 
@@ -267,5 +280,56 @@ class MiddlemacExtras < ::Middleman::Extension
     end
     @md_sizes_b.join("\n")
   end
+  
+  
+  #--------------------------------------------------------
+  # with_extension_proposal( path, ext )
+  #  Returns a file with an extension if found; otherwise
+  #  it returns the original file.
+  #--------------------------------------------------------
+  def with_extension_proposal( path, ext )
+    return path unless File.extname(path) == '' && app.extensions[:MiddlemacExtras].options[:img_auto_extensions]
+  
+    real_path = path.dup
+
+    # Enable absolute paths, too.
+    real_path = if path.start_with?('/')
+                  File.expand_path(File.join(app.config[:source], real_path))
+                else
+                  File.expand_path(File.join(app.config[:source], app.config[:images_dir], real_path))
+                end
+
+    proposed_path = "#{real_path}#{ext}"
+    file = app.files.find(:source, proposed_path)
+    
+    if file && file[:full_path].exist?
+      "#{path}#{ext}"
+    else
+      path
+    end
+
+  end
+
+
+  #--------------------------------------------------------
+  # say
+  #  Output colored messages using ANSI codes.
+  #--------------------------------------------------------
+  def say(message = '', color = :reset)
+    colors = { :blue   => "\033[34m",
+               :cyan   => "\033[36m",
+               :green  => "\033[32m",
+               :red    => "\033[31m",
+               :yellow => "\033[33m",
+               :reset  => "\033[0m",
+    }
+
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      puts message
+    else
+      puts colors[color] + message + colors[:reset]
+    end
+  end # say
+
 
 end # class MiddlemacExtras

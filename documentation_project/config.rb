@@ -32,7 +32,7 @@ activate :MiddlemacExtras do |config|
   # Set this to an array of extensions in the order of precedence for
   # using `image_tag` without file extensions.
   config.img_auto_extensions_order = %w(.svg .png .jpg .jpeg .gif .tiff .tif)
-
+  
 end
 
 
@@ -58,7 +58,7 @@ helpers do
   end
 
   def product_version
-    '1.0.5'
+    '1.0.6'
   end
 
   def product_uri
