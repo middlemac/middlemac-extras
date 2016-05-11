@@ -1,19 +1,36 @@
 middlemac-extras change log
 ===========================
 
-- Version 1.0.6 / 2016-April-08
+- Version 1.0.7 / 2016-May-11
 
-  - If `middleman-targets` is also installed, support images without extensions
-    for it, too. Make sure to active it first, though.
-    
-  - Added CLI topic to help file.
+  - Version 1.0.7 supports RAKE, Yard, etc.
+      - YARD support added.
+      - Cucumber tests added.
+      - Documentation project updates.
+      - Source code commented extensively for YARD.
+  - Works cooperative if middleman-targets is installed to support images without extensions for target-specific images, too. Added CLI help section.
 
 - Version 1.0.5 / 2016-April-08
 
-  - Fixed the implementation of css_image_sizes so that full path is not
-    always used, as Middleman using `:relative_assets` doesn't use the full
-    path.
+  - 1.0.5 Fixes id-ten-t issue.
+
+- Version 1.0.4 / 2016-April-08
+
+  - Final gem fix.
+
+- Version 1.0.3 / 2016-April-08
+
+  - Gem fixes.
+
+- Version 1.0.2 / 2016-April-08
+
+  - Fix bad gem push.
+
+- Version 1.0.1 / 2016-April-08
+
+  - css_images_sizes fixed for relative_assets
 
 - Version 1.0.0 / 2016-April-05
 
-  - Initial Release
+  - middlemac-extras
+    Initial release.

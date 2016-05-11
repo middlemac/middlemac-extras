@@ -1,0 +1,38 @@
+---
+title:    API Reference
+blurb:    Look at the API documentation for the helpers and configuration
+          settings directly.
+layout:   template-logo-medium
+---
+
+<%= md_links %>
+<% content_for :seeAlso do %>
+<ul>
+  <li><a href="/">Welcome to <code>middlemac-extras</code></a></li>
+  <li><a href="css_image_sizes.html">The <code>css_image_sizes</code> helper</a></li>
+  <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
+  <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="cli.html">Command line interface</a></li>
+  <li><a href="license.html">The MIT License</a></li>
+</ul>
+<% end %>
+
+# <%= current_page.data.title %>
+<%= current_page.data.blurb %>
+
+## Configuration settings
+
+<%= partial 'partials/yard_config' %>
+
+* * *
+
+## Extended Helpers
+
+<%= partial 'partials/yard_helpers_extended' %>
+
+* * *
+
+## Helpers
+
+<%= partial 'partials/yard_helpers' %>

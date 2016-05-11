@@ -14,4 +14,11 @@ Gemfile.lock
 /pkg
 
 # Ignore build folders
-build*
+build/*
+
+# Yard cruft
+/doc/
+/.yardoc
+
+# Aruba
+/tmp/

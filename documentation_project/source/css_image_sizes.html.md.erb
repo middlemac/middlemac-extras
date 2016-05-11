@@ -4,8 +4,6 @@ blurb:    Use the <code>css_image_sizes</code> helper to specify maximum sizes
           for all of your project’s images without using unsemantic width and 
           height attributes in your HTML code.
 layout:   template-logo-medium
-order:    40
-navigate: false
 ---
 
 <%= md_links %>
@@ -16,6 +14,7 @@ navigate: false
   <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
   <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
   <li><a href="config_rb.html">Setting up <code>config.rb</code></a></li>
+  <li><a href="api_reference.html">API Reference</a></li>
   <li><a href="cli.html">Command line interface</a></li>
   <li><a href="license.html">The MIT License</a></li>
 </ul>
@@ -45,7 +44,7 @@ When called like this:
 
 You could use this in an HTML `<style>` element on each of your pages, or better
 yet in your layouts. This has the unfortunate effect of including it in every
-one of your pages, however, and so this sample project uses like this:
+one of your pages, however, and so this sample project uses it like this:
 
 Contents of `stylesheets/css_image_sizes.css.erb`:
 

@@ -1,11 +1,12 @@
-################################################################################
-# extension.rb
-#  This file constitutes the framework for the bulk of this extension.
-################################################################################
 require 'middleman-core'
 require 'pathname'
 require 'fastimage'
 
+################################################################################
+# This extension provides Middleman several useful helpers and extends some of
+# its built-in helpers to offer more features.
+# @author Jim Derry <balthisar@gmail.com>
+################################################################################
 class MiddlemacExtras < ::Middleman::Extension
 
   ############################################################
@@ -17,8 +18,39 @@ class MiddlemacExtras < ::Middleman::Extension
   option :img_auto_extensions_order, %w(.svg .png .jpg .jpeg .gif .tiff .tif), 'Specifies the order to support automatic image extensions.'
 
 
+  # @!group Extension Configuration
+
+  # @!attribute [rw] options[:retina_srcset]=
+  # This option determines whether or not the enhanced `image_tag` helper will
+  # be used to include an @2x `srcset` attribute automatically. This automatic
+  # behavior will only be applied if the image asset exists on disk and this
+  # option is set to `true`.
+  # @param [Boolean] value `true` or `false` to enable or disable this feature.
+  # @return [Boolean] Returns the current value of this option.
+
+  # @!attribute [rw] options[:img_auto_extensions]=
+  # This option determines whether or not to support specifying images without
+  # using a file name extension. If set to `true` then the `image_tag` helper
+  # will work for images even if you don’t specify an extension, but only if a
+  # file exists on disk that has one of the extensions in 
+  # `:img_auto_extensions_order`.
+  # @param [Boolean] value `true` or `false` to enable or disable this feature.
+  # @return [Boolean] Returns the current value of this option.
+
+  # @!attribute [rw] options[:img_auto_extensions_order]=
+  # This option defines the eligible file name extensions and their precedence
+  # when you specify an image without an extension using the `image_tag` helper.
+  # Set this to an array of image file extensions in your desired order of
+  # of precedence.
+  # @param [Array<String>] value Set to an array of image extensions.
+  # @return [Array<String>] Returns the current value of this option.
+
+  # @!endgroup
+
+
   ############################################################
   # initialize
+  # @visibility private
   ############################################################
   def initialize(app, options_hash={}, &block)
 
@@ -33,7 +65,8 @@ class MiddlemacExtras < ::Middleman::Extension
 
   ############################################################
   # after_configuration
-  #  Callback occurs before `before_build`.
+  #   Callback occurs before `before_build`.
+  # @visibility private
   #############################################################
   def after_configuration
 
@@ -56,8 +89,13 @@ class MiddlemacExtras < ::Middleman::Extension
   helpers do
 
     #--------------------------------------------------------
-    # md_links
-    #   Adds simple markdown links where needed.
+    # This helper provides access to `middlemac-extras`’ 
+    # index of links in Markdown reference format, enabling
+    # you to use reference-style links in documents. Because
+    # this helper includes literal Markdown, it’s only useful
+    # in Markdown documents.
+    # @return [String] Returns a string with the Markdown
+    #   index of every page in your project.
     #--------------------------------------------------------
     def md_links
       extensions[:MiddlemacExtras].md_links_b
@@ -65,8 +103,13 @@ class MiddlemacExtras < ::Middleman::Extension
 
 
     #--------------------------------------------------------
-    # md_images
-    #   Adds simple markdown image links where needed.
+    # This helper provides access to `middlemac-extras`’ 
+    # index of images in Markdown reference format, enabling
+    # you to use reference-style images in documents. Because
+    # this helper includes literal Markdown, it’s only useful
+    # in Markdown documents.
+    # @return [String] Returns a string with the Markdown
+    #   index of every image in your project.
     #--------------------------------------------------------
     def md_images
       extensions[:MiddlemacExtras].md_images_b
@@ -74,8 +117,14 @@ class MiddlemacExtras < ::Middleman::Extension
 
 
     #--------------------------------------------------------
-    # css_image_sizes
-    #   Generates image size CSS information for all images.
+    # This helper provides CSS for every image in your
+    # project. Each image will have a declaration that sets
+    # `max-width` and `max-height` to the actual size of the
+    # image. Proper @2x image support is included. It’s most
+    # useful to use this helper in a `some_file.css.erb`
+    # file.
+    # @return [String] Returns a string with the CSS markup
+    #   for every image found in your project.
     #--------------------------------------------------------
     def css_image_sizes
       extensions[:MiddlemacExtras].md_sizes_b
@@ -83,10 +132,25 @@ class MiddlemacExtras < ::Middleman::Extension
 
 
     #--------------------------------------------------------
-    # image_tag(path, params={})
-    #   Add automatic srcset if an @2x image is present and
-    #   no srcset is already specified. Also support the
-    #   use of extension-less images.
+    # With the proper options enabled this helper extends
+    # the built-in functionality of **Middleman**’s helpers
+    # in a couple of ways. With `:retina_srcset` enabled,
+    # automatic `srcset` attributes will be applied to
+    # `<img>` tags if an @2x version of the specified image
+    # is found. With `:img_auto_extensions` it’s possible to
+    # specify image names without the file name extension.
+    # @param [String] path Specify path to the image file.
+    # @param [Hash] params Optional parameters to pass to
+    #   the helper. **Middleman** (and other extensions)
+    #   provide other parameters in addition to these.
+    # @option params [Boolean] :img_auto_extensions Allows
+    #   control of the automatic image extensions option
+    #   on a per-use basis.
+    # @option params [Boolean] :retina_srcset Allows control
+    #   of the automatic @2x images feature on a per-use
+    #   basis. 
+    # @return [String] Returns an HTML `<img>` tag.
+    # @group Extended Helpers
     #--------------------------------------------------------
     def image_tag(path, params={})
       params.symbolize_keys!
@@ -176,13 +240,18 @@ class MiddlemacExtras < ::Middleman::Extension
 
 
   ############################################################
-  #  Instance Methods
+  # Instance Methods
+  # @!group Instance Methods
   ############################################################
 
-  #--------------------------------------------------------
-  # md_links_b
-  #   Adds simple markdown links where needed.
-  #--------------------------------------------------------
+
+  #########################################################
+  # This accessor for @md_links_b lazily populates the
+  # backing variable and buffers it for repeated use. In
+  # the event of file changes, a server restart is needed.
+  # @returns [String] Returns the Markdown reference list.
+  # @!visibility private
+  #########################################################
   def md_links_b
     unless @md_links_b
       @md_links_b = get_link_data('text/html', 'application/xhtml')
@@ -194,9 +263,13 @@ class MiddlemacExtras < ::Middleman::Extension
   end
 
 
-  #--------------------------------------------------------
-  # md_images_b
-  #--------------------------------------------------------
+  #########################################################
+  # This accessor for @md_images_b lazily populates the
+  # backing variable and buffers it for repeated use. In
+  # the event of file changes, a server restart is needed.
+  # @returns [String] Returns the Markdown reference list.
+  # @!visibility private
+  #########################################################
   def md_images_b
     unless @md_images_b
       @md_images_b = get_link_data('image/')
@@ -207,13 +280,15 @@ class MiddlemacExtras < ::Middleman::Extension
   end
 
 
-  #--------------------------------------------------------
-  # get_link_data( *types )
-  #   Get all of the required link data for generating
-  #   markdown shortcuts.
-  # @param  types should be the content_type to check.
-  # @return an array of hashes with file data.
-  #--------------------------------------------------------
+  #########################################################
+  # Get all of the required link data for generating
+  # markdown shortcuts for the two property accessors.
+  # @param [va_list<String>] types One or more MIME types
+  #   specifying the file types for which to build links.
+  # @return [Array<Hash>] An array of hashes containing
+  #   the file data.
+  # @!visibility private
+  #########################################################
   def get_link_data( *types )
     all_links = []
     # We'll include a sort by number of path components in this chain so
@@ -244,10 +319,14 @@ class MiddlemacExtras < ::Middleman::Extension
   end
 
 
-  #--------------------------------------------------------
-  # md_sizes_b
-  #  For every image resource, try to build the size.
-  #--------------------------------------------------------
+  #########################################################
+  # For every image resource in the project, attempt to
+  # build the CSS rules. Only bitmap images are supported,
+  # as vectors (e.g., SVG) don’t have a specific size.
+  # @returns [String] Returns the CSS stylesheet with the
+  #   maximum width and height for each image.
+  # @!visibility private
+  #########################################################
   def md_sizes_b
     unless @md_sizes_b
       @md_sizes_b = []
@@ -282,11 +361,19 @@ class MiddlemacExtras < ::Middleman::Extension
   end
   
   
-  #--------------------------------------------------------
-  # with_extension_proposal( path, ext )
-  #  Returns a file with an extension if found; otherwise
-  #  it returns the original file.
-  #--------------------------------------------------------
+  #########################################################
+  # Returns a file with an extension if found; otherwise
+  # it returns the original file. This is used to search
+  # for images for which no file name extension has been
+  # provided.
+  # @param [String] path Specifies the image without an
+  #   extension, which is to be checked.
+  # @param [String] ext Specifies the extension to check.
+  # @returns [String] Returns the path of the image with
+  #   an extension (if found), or returns the original
+  #   `path` parameter.
+  # @!visibility private
+  #########################################################
   def with_extension_proposal( path, ext )
     return path unless File.extname(path) == '' && app.extensions[:MiddlemacExtras].options[:img_auto_extensions]
   
@@ -311,10 +398,15 @@ class MiddlemacExtras < ::Middleman::Extension
   end
 
 
-  #--------------------------------------------------------
-  # say
-  #  Output colored messages using ANSI codes.
-  #--------------------------------------------------------
+  #########################################################
+  # Output colored messages using ANSI codes.
+  # @param [String] message The message to output to the
+  #   console.
+  # @param [Symbol] color The color in which to display
+  #   the message.
+  # @returns [Void]
+  # @!visibility private
+  #########################################################
   def say(message = '', color = :reset)
     colors = { :blue   => "\033[34m",
                :cyan   => "\033[36m",

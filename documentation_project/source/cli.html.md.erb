@@ -1,12 +1,12 @@
 ---
 title:     Command Line Interface
+blurb:     This gem offers a simple command line interface for building its own
+           documentation.
 layout:    template-logo-medium
 ---
 
 # <%= current_page.data.title %>
-
-`middlemac-extras` has a small command line interface that might be useful
-for generating sample documentation.
+<%= current_page.data.blurb %>
 
 The CLI takes the format:
 
@@ -44,6 +44,7 @@ bundle exec middleman server
   <li><a href="image_tag.html">The <code>image_tag</code> helper</a></li>
   <li><a href="md_images.html">The <code>md_images</code> helper</a></li>
   <li><a href="md_links.html">The <code>md_links</code> helper</a></li>
+  <li><a href="api_reference.html">API Reference</a></li>
   <li><a href="license.html">The MIT License</a></li>
 </ul>
 <% end %>
