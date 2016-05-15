@@ -1,13 +1,19 @@
 middlemac-extras change log
 ===========================
 
-- Version 1.0.7 / 2016-May-11
+- Version 1.0.8 / 2016-May-15
 
+  - Bump to 1.0.8 improvements:
+      - Better version management in Rakefile.
+      - Fixes failing Cucumber testing by forcing capybara development dependency.
   - Version 1.0.7 supports RAKE, Yard, etc.
       - YARD support added.
       - Cucumber tests added.
       - Documentation project updates.
       - Source code commented extensively for YARD.
+
+- Version 1.0.6 / 2016-April-08
+
   - Works cooperative if middleman-targets is installed to support images without extensions for target-specific images, too. Added CLI help section.
 
 - Version 1.0.5 / 2016-April-08
