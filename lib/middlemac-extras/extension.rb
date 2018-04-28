@@ -57,6 +57,7 @@ class MiddlemacExtras < ::Middleman::Extension
     super
 
     @md_links_b = nil
+    @md_links_modern_b = nil
     @md_images_b = nil
     @md_sizes_b = nil
 
@@ -74,6 +75,7 @@ class MiddlemacExtras < ::Middleman::Extension
     # changes. For speed we don't want to recalculate everything
     # every time a helper is used, but only the first time.
     @md_links_b = nil
+    @md_links_modern_b = nil
     @md_images_b = nil
     @md_sizes_b = nil
 
@@ -99,6 +101,22 @@ class MiddlemacExtras < ::Middleman::Extension
     #--------------------------------------------------------
     def md_links
       extensions[:MiddlemacExtras].md_links_b
+    end
+
+
+    #--------------------------------------------------------
+    # This helper provides access to `middlemac-extras`’ 
+    # index of links in Markdown reference format, enabling
+    # you to use reference-style links in documents. Because
+    # this helper includes literal Markdown, it’s only useful
+    # in Markdown documents. This is only useful when using
+    # Middlemac 3.0.0 or newer, which includes support for
+    # helpbook style links.
+    # @return [String] Returns a string with the Markdown
+    #   index of every page in your project.
+    #--------------------------------------------------------
+    def md_hblinks
+      extensions[:MiddlemacExtras].md_links_modern_b
     end
 
 
@@ -270,6 +288,31 @@ class MiddlemacExtras < ::Middleman::Extension
 
 
   #########################################################
+  # This accessor for @md_links_modern_b lazily populates
+  # the backing variable and buffers it for repeated use.
+  # In the event of file changes, a server restart is 
+  # needed.
+  # @returns [String] Returns the Markdown reference list.
+  # @!visibility private
+  #########################################################
+  def md_links_modern_b
+    unless @md_links_modern_b
+      @md_links_modern_b = get_link_data('text/html', 'application/xhtml')
+                          .collect { |l| 
+                            if l[:title]
+                              "[#{l[:reference]}]: #{l[:hb_link]} \"#{l[:title]}\"" 
+                            else
+                              "[#{l[:reference]}]: #{l[:hb_link]}" 
+                            end
+                            }
+                          .join("\n")
+    end
+
+    @md_links_modern_b
+  end
+
+
+  #########################################################
   # This accessor for @md_images_b lazily populates the
   # backing variable and buffers it for repeated use. In
   # the event of file changes, a server restart is needed.
@@ -309,6 +352,7 @@ class MiddlemacExtras < ::Middleman::Extension
       reference_path.shift
       reference = File.basename(r.destination_path, '.*').gsub(%r{ }, '_')
       link = r.url
+      hb_link = defined?(r.hb_NavId) ? "#/#{r.hb_NavId}" : nil
       title = r.data.title ? r.data.title.gsub(%r{</?[^>]+?>}, '') : nil
 
       i = 0
@@ -318,7 +362,7 @@ class MiddlemacExtras < ::Middleman::Extension
         i += 1
       end
 
-      all_links << {:reference => reference, :link => link, :title => title}
+      all_links << {:reference => reference, :link => link, :title => title, :hb_link => hb_link}
     end # .each
 
     all_links

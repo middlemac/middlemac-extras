@@ -58,7 +58,7 @@ helpers do
   end
 
   def product_version
-    '1.0.9'
+    '1.0.10'
   end
 
 end

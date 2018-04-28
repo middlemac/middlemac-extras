@@ -1,9 +1,13 @@
 middlemac-extras change log
 ===========================
 
-- Version 1.0.9 / 2018-April-28
+- Version 1.0.10 / 2018-April-28
 
+  - Update to 1.0.10 for use with newer middlemac.
   - Updated to 1.0.9. md_links no longer outputs empty quotes if no description.
+
+- Version 1.0.8 / 2016-May-15
+
   - Bump to 1.0.8 improvements:
       - Better version management in Rakefile.
       - Fixes failing Cucumber testing by forcing capybara development dependency.
