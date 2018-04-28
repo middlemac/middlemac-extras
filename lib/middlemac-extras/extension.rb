@@ -255,7 +255,13 @@ class MiddlemacExtras < ::Middleman::Extension
   def md_links_b
     unless @md_links_b
       @md_links_b = get_link_data('text/html', 'application/xhtml')
-                        .collect { |l| "[#{l[:reference]}]: #{l[:link]} \"#{l[:title]}\"" }
+                        .collect { |l| 
+                          if l[:title]
+                            "[#{l[:reference]}]: #{l[:link]} \"#{l[:title]}\"" 
+                          else
+                            "[#{l[:reference]}]: #{l[:link]}" 
+                          end
+                          }
                         .join("\n")
     end
 
