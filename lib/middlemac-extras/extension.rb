@@ -182,9 +182,6 @@ class MiddlemacExtras < ::Middleman::Extension
       retina_srcset = ext_options[:retina_srcset]
       retina_srcset = params.delete(:retina_srcset) if params[:retina_srcset]
 
-      automatic_alt_tags = @app.extensions[:automatic_alt_tags]
-      automatic_alt_tags = params.delete(:automatic_alt_tags) if params[:automatic_alt_tags]
-
 
       #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # Support images without extensions. If an image with the
@@ -235,19 +232,6 @@ class MiddlemacExtras < ::Middleman::Extension
           params[:srcset] ||= "#{test_path} 2x"
         end
       end
-
-
-      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Support automatic alt tags for absolute locations, too.
-      # Only do this for absolute paths; let the extension do its
-      # own thing otherwise.
-      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      if automatic_alt_tags && path.start_with?('/')
-        alt_text = File.basename(path, '.*')
-        alt_text.capitalize!
-        params[:alt] ||= alt_text
-      end
-
 
       super(path, params)
     end

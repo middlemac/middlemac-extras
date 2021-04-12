@@ -1,9 +1,24 @@
 middlemac-extras change log
 ===========================
 
+- Version 1.0.11 / 2021-April-12
+
+  - Updated Ruby version requirements to make it clear that Ruby 3.0+ is not yet
+    supported.
+    Updated test task so that default task doesn't use the noisy version with deprecation
+    warnings, and to remove the advertisement at the end of output.
+    Removed support for automatic_image_tags, which was removed due to middleman
+    issue #2319.
+  - Added .gitattributes for proper language reporting in GitHub.
+    No version bump.
+    No new gem.
+
 - Version 1.0.10 / 2018-April-28
 
   - Update to 1.0.10 for use with newer middlemac.
+
+- Version 1.0.9 / 2018-April-28
+
   - Updated to 1.0.9. md_links no longer outputs empty quotes if no description.
 
 - Version 1.0.8 / 2016-May-15

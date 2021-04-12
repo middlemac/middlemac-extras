@@ -13,7 +13,7 @@
 #  so it's best to make sure they're activated first.
 #==========================================================================
 # activate :MiddlemanPageGroups
-activate :automatic_alt_tags
+
 
 #==========================================================================
 # Extension Setup
@@ -58,7 +58,7 @@ helpers do
   end
 
   def product_version
-    '1.0.10'
+    '1.0.11'
   end
 
 end

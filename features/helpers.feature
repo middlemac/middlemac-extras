@@ -35,5 +35,5 @@ Feature: Provide helpers and resource items to make multiple targets easy to man
     The extended image tag should include srcset automatically if @2x images are
     present, and not include a srcset if not.
     When I cd to "build"
-    And the file "index.html" should contain 'img src="/images/middlemac-extras-small.png" srcset="/images/middlemac-extras-small@2x.png 2x" alt="Middlemac extras small"'
-    And the file "index.html" should contain 'img src="/images/middlemac-extras-smaller.png" alt="Middlemac extras smaller"'
+    And the file "index.html" should contain 'img src="/images/middlemac-extras-small.png" srcset="/images/middlemac-extras-small@2x.png 2x" alt=""'
+    And the file "index.html" should contain 'img src="/images/middlemac-extras-smaller.png" alt=""'
